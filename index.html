@@ -20,7 +20,7 @@
 <meta name="twitter:description" content="v5기준 링크 퍼날 X 이름 누르면 복사">
 <meta name="twitter:image"       content="https://hiimmani.github.io/artist-tags-note/cover.jpg?v=mv52jpaa">
 
-<title>NAI 작태 모음</title>
+<title>작태 노트</title>
 <style>
 /* ── 색상 ───────────────────────────── */
 :root{
@@ -467,8 +467,10 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
 
 <div class="wrap">
   <header><div class="notebook-label"><span class="notebook-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="3" width="15" height="18" rx="3"/><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h4"/></svg></span><span>ARTIST NOTES</span></div>
-    <h1 id="siteTitle">NAI 작태 모음</h1>
-    <p class="sub" id="siteSub">V5 기준 계속 추가 됨</p>
+    <h1 id="siteTitle">작태 노트</h1>
+    <p class="sub" id="siteSub">v5기준
+링크 퍼날 X
+이름 누르면 복사</p>
     <button id="editHead">사이트 설정</button>
   </header>
 
@@ -1012,6 +1014,11 @@ async function ogChange(){
   let out = html;
   out = setMeta(out, 'og:site_name',        S.site.title);
   out = setMeta(out, 'og:title',            S.site.title);
+  // 페이지가 처음 뜰 때 잠깐 보이는 제목/설명도 지금 값으로 맞춘다 (예전 값이 1초쯤 보였다 바뀌는 문제)
+  const escText = t => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  out = out.replace(/<title>[^<]*<\/title>/i, () => '<title>' + escText(S.site.title) + '</title>');
+  out = out.replace(/(<h1 id="siteTitle">)[^<]*(<\/h1>)/, (m, a, b) => a + escText(S.site.title) + b);
+  out = out.replace(/(<p class="sub" id="siteSub")[^>]*>[^<]*(<\/p>)/, (m, a, b) => a + (S.site.sub ? '' : ' style="display:none"') + '>' + escText(S.site.sub) + b);
   out = setMeta(out, 'og:description',      desc);
   out = setMeta(out, 'twitter:title',       S.site.title);
   out = setMeta(out, 'twitter:description', desc);
