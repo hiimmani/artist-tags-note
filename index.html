@@ -10,17 +10,17 @@
 <meta property="og:type"        content="website">
 <meta property="og:site_name"   content="작태 노트">
 <meta property="og:title"       content="작태 노트">
-<meta property="og:description" content="v5 기준 링크 퍼날 X 이름 누르면 복사">
+<meta property="og:description" content="v5기준 링크 퍼날 X 이름 누르면 복사 폰: 스와이프 / 컴: 방향키로 넘기기 가능">
 <meta property="og:url"         content="https://hiimmani.github.io/artist-tags-note/">
 <meta property="og:image"       content="https://hiimmani.github.io/artist-tags-note/cover.jpg?v=mv52jpaa">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="작태 노트">
-<meta name="twitter:description" content="v5 기준 링크 퍼날 X 이름 누르면 복사">
+<meta name="twitter:description" content="v5기준 링크 퍼날 X 이름 누르면 복사 폰: 스와이프 / 컴: 방향키로 넘기기 가능">
 <meta name="twitter:image"       content="https://hiimmani.github.io/artist-tags-note/cover.jpg?v=mv52jpaa">
 
-<title>NAI 작태 모음</title>
+<title>작태 노트</title>
 <style>
 /* ── 색상 ───────────────────────────── */
 :root{
@@ -125,6 +125,14 @@ h1{margin:0;font-size:29px;font-weight:650;letter-spacing:-.055em;line-height:1.
 .lb-tags .t{font-weight:700;font-size:11px;padding:4px 8px;border-radius:6px}
 .lb-tags .none{color:var(--c-faint);font-size:13px;padding:7px 0;font-weight:600}
 .lb-actions{display:flex;gap:9px;margin-top:12px}
+.lb-navrow{display:flex;gap:9px;margin-top:14px}
+.lb-navrow button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-weight:750;padding:8px;font-size:12px;color:#886ea2;border-radius:8px;background:#fff;border:1px solid #e6deee;touch-action:manipulation}
+.lb-navrow button svg{width:1.15em;height:1.15em;flex:none}
+.lb-navrow button:active{background:#f6f0fb}
+.lb-navrow button:disabled{opacity:.35;pointer-events:none}
+.lb-navrow .lb-actions{flex:2;margin:0}     /* 관리자: 이전 · 수정 · 삭제 · 다음 한 줄 */
+.lb-navrow .lb-actions button{border:0;white-space:nowrap}
+@media (hover:hover){.lb-navrow button:hover{background:#f6f0fb}}
 .lb-actions button{flex:1;font-weight:750;padding:8px;font-size:12px;color:#886ea2;border-radius:8px;background:#f6f0fb}
 .lb-top{position:absolute;top:env(safe-area-inset-top,0px);left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:4;pointer-events:none;height:46px}
 .lb-top>*{pointer-events:auto}
@@ -285,11 +293,15 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
 
 /* ── 페이지 이동 · 데스크톱 ──────────── */
 #pagesBottom{padding:22px 0 56px}
+.imp-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.imp-txt{flex:1;min-width:0;overflow-wrap:anywhere}
+.imp-x{flex:none;width:30px;height:30px;display:grid;place-items:center;padding:0;border-radius:7px;color:#8f7aa3;font-size:14px;line-height:1}
+.imp-x:active{background:#f3ecf9}
 .pagination{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;padding:12px 0;color:#9885ac}
 .pagination button{min-width:30px;height:32px;padding:0 8px;border:1px solid #e8dff0;border-radius:7px;background:#fdfbff;color:#89749c;font-size:11px}
 .pagination button[aria-current="page"]{background:#eee4f7;border-color:#d8c5e9;color:#624b79;font-weight:600}
 .pagination button:disabled{opacity:.35;cursor:default}
-.pagination small{width:100%;text-align:center;font-size:10px;color:#a494b2;margin-top:2px}
+.pagination small{width:100%;text-align:center;font-size:10px;color:#a494b2;margin-top:10px}
 .site-credit{text-align:center;font-size:11px;line-height:1.6;letter-spacing:.04em;color:#b5a9c1;padding:18px 60px calc(32px + var(--safe-b))}
 .desktop-sort{display:none}
 @media (min-width:700px){
@@ -342,7 +354,7 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
   #lbName .ci,#lbName .ci svg{width:20px;height:20px}
   .cphint{font-size:13px}
   .lb-tags .t{font-size:14px}
-  .lb-actions button{font-size:15px}
+  .lb-actions button,.lb-navrow button{font-size:15px}
   .lb-pos{font-size:14px}
   .icob,.nav{width:40px;height:40px;font-size:24px}
   #toast{font-size:14px}
@@ -392,7 +404,7 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
   #backToTop svg{width:26px;height:26px}
 }
 @media (max-width:699px){
-  .lb-scroll{padding-top:calc(112px + env(safe-area-inset-top,0px));padding-left:72px;padding-right:72px}
+  .lb-scroll{padding-top:calc(62px + env(safe-area-inset-top,0px));padding-left:72px;padding-right:72px}
   .lb-scroll{padding-left:60px;padding-right:60px}
   .lb .nav{width:36px;height:36px;padding:0;border-radius:10px;font-size:24px;touch-action:manipulation;box-shadow:0 2px 10px #49365c18}
   .lb .nav.prev{left:max(12px,env(safe-area-inset-left,0px))}
@@ -448,7 +460,7 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
   .cphint{font-size:15px}
   .lb-tags .t{font-size:16px}
   .lb-tags .none{font-size:15px}
-  .lb-actions button{font-size:16px;padding:10px}
+  .lb-actions button,.lb-navrow button{font-size:16px;padding:10px}
   .lb-pos{font-size:15px}
   #lbFav{width:46px;height:46px}
   #lbFav svg{width:25px;height:25px}
@@ -467,8 +479,11 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
 
 <div class="wrap">
   <header><div class="notebook-label"><span class="notebook-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="3" width="15" height="18" rx="3"/><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h4"/></svg></span><span>ARTIST NOTES</span></div>
-    <h1 id="siteTitle">NAI 작태 모음</h1>
-    <p class="sub" id="siteSub">V5 기준 계속 추가 됨</p>
+    <h1 id="siteTitle">작태 노트</h1>
+    <p class="sub" id="siteSub">v5기준
+링크 퍼날 X
+이름 누르면 복사
+폰: 스와이프 / 컴: 방향키로 넘기기 가능</p>
     <button id="editHead">사이트 설정</button>
   </header>
 
@@ -523,9 +538,13 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
         </div>
         <p class="cphint">이름을 누르면 복사됩니다</p>
         <div class="lb-tags" id="lbTags"></div>
-        <div class="lb-actions" id="lbActions" style="display:none">
-          <button id="lbEdit">✎ 수정</button>
-          <button id="lbDel" class="del">삭제</button>
+        <div class="lb-navrow">
+          <button id="lbPrev" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>이전</button>
+          <div class="lb-actions" id="lbActions" style="display:none">
+            <button id="lbEdit">✎ 수정</button>
+            <button id="lbDel" class="del">삭제</button>
+          </div>
+          <button id="lbNext" aria-label="다음">다음<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
         </div>
       </div>
     </div>
@@ -534,8 +553,6 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
     <span class="lb-pos" id="lbPos"></span>
     <button class="icob" id="lbClose" aria-label="닫기">✕</button>
   </div>
-  <button class="nav prev" id="lbPrev" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
-  <button class="nav next" id="lbNext" aria-label="다음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
 </div>
 
 <div class="sheet" id="sheet"><div class="sheet-box" id="sheetBox"></div></div>
@@ -764,6 +781,8 @@ async function headInfo(repo){
 async function ghCommit(changes, message, onProg, repo){
   let done = 0;
   // 파일 올리기와 "지금 최신 커밋이 뭔지" 알아보기를 동시에 시작한다 (순서대로 하면 그만큼 늦어진다)
+  const build = changes.find(c => c.build);       // data.json: 저장 직전 최신 목록에 합쳐서 만든다
+  changes = changes.filter(c => !c.build);
   const treeP = mapLimit(changes, PARALLEL, async c => {
     if(c.del) return { path: c.path, mode: '100644', type: 'blob', sha: null };
     if(c.sha) return { path: c.path, mode: '100644', type: 'blob', sha: c.sha };
@@ -778,9 +797,16 @@ async function ghCommit(changes, message, onProg, repo){
   for(let i = 0; i < 4; i++){
     try{
       const { head, base } = await headInfo(repo);
-      const nt = await ghReq('POST', 'git/trees', { base_tree: base, tree }, repo);
+      let entries = tree, built = null;
+      if(build){
+        built = await build.build(head);
+        const b = await ghReq('POST', 'git/blobs', { content: built.b64, encoding: 'base64' }, repo);
+        entries = [...tree, { path: build.path, mode: '100644', type: 'blob', sha: b.sha }];
+      }
+      const nt = await ghReq('POST', 'git/trees', { base_tree: base, tree: entries }, repo);
       const nc = await ghReq('POST', 'git/commits', { message, tree: nt.sha, parents: [head] }, repo);
       await ghReq('PATCH', `git/refs/heads/${S.cfg.branch}`, { sha: nc.sha, force: false }, repo);
+      if(built) built.apply();
       return;
     }catch(e){
       lastErr = e;
@@ -799,27 +825,91 @@ function utf8b64(str){
     bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 }
-function dataB64(){
-  return utf8b64(JSON.stringify({ version: 3, title: S.site.title, sub: S.site.sub, cover: S.site.cover || '', ...(S.img ? { images: S.img } : {}), updated: new Date().toISOString(), items: S.items }, null, 1));
+function dataB64(items = S.items, site = S.site, img = S.img){
+  return utf8b64(JSON.stringify({ version: 3, title: site.title, sub: site.sub, cover: site.cover || '', ...(img ? { images: img } : {}), updated: new Date().toISOString(), items }, null, 1));
+}
+
+/* ── 저장할 때 다른 기기의 변경을 지우지 않게 합치기 ─────
+   예전에는 "이 기기 화면의 목록 전체"로 data.json 을 덮어써서,
+   오래 열어 둔 창이나 다른 기기에서 저장하면 그 사이 추가된 항목이 사라졌다.
+   이제는 마지막으로 불러온 목록(S.base)과 비교해 이 기기에서 바꾼 것만
+   GitHub 의 최신 목록 위에 다시 적용한다.                                     */
+S.base = null;   // { items: Map(id → JSON), site: JSON }
+function setBase(items = S.items, site = S.site){
+  S.base = { items: new Map(items.map(it => [it.id, JSON.stringify(it)])), site: JSON.stringify(site) };
+}
+async function readRemoteData(ref){
+  const r = await fetch(api('contents/data.json?ref=' + ref),
+    { headers: { ...ghHead(), Accept: 'application/vnd.github.raw' }, cache: 'no-store' });
+  if(r.status === 404) return null;
+  if(!r.ok) throw new Error('최신 목록을 읽지 못했습니다 (GitHub ' + r.status + ')');
+  const d = await r.json();
+  if(!d || !Array.isArray(d.items)) throw new Error('최신 목록 형식이 올바르지 않습니다');
+  return d;
+}
+function mergeData(remote){
+  const local = S.items, base = S.base;
+  if(!remote || !base) return { items: local, site: S.site, img: S.img, foreign: false };
+  const rItems = normalize(remote.items);
+  const localById = new Map(local.map(it => [it.id, it]));
+  const out = [], seen = new Set();
+  let foreign = false;
+  for(const r of rItems){
+    const l = localById.get(r.id), b = base.items.get(r.id);
+    if(!l){
+      if(b !== undefined) continue;                       // 이 기기에서 지운 항목
+      out.push(r); foreign = true;                        // 다른 기기에서 추가한 항목
+    }else if(b !== undefined && JSON.stringify(l) === b){
+      out.push(JSON.stringify(r) === b ? l : r);          // 이 기기에선 그대로 → 최신 쪽 유지
+      if(JSON.stringify(r) !== b) foreign = true;
+    }else out.push(l);                                    // 이 기기에서 고친 항목
+    seen.add(r.id);
+  }
+  // 이 기기에서 새로 추가한 항목 (다른 기기에서 지운 항목은 되살리지 않는다)
+  const used = {};
+  out.forEach(it => { const c = catOf(it); (used[c] ||= new Set()).add(it.no); });
+  for(const l of local){
+    if(seen.has(l.id) || base.items.has(l.id)) continue;
+    const c = catOf(l), u = (used[c] ||= new Set());
+    if(!Number.isSafeInteger(l.no) || l.no < 1 || u.has(l.no)) l.no = Math.max(0, ...u) + 1;   // 번호가 겹치면 뒤로
+    u.add(l.no); out.push(l);
+  }
+  if(rItems.some(r => !localById.has(r.id) && !base.items.has(r.id))) foreign = true;
+  const rSite = { title: remote.title || DEF.title, sub: remote.sub ?? DEF.sub, cover: remote.cover || '' };
+  const site = JSON.stringify(S.site) !== base.site ? S.site : rSite;
+  if(JSON.stringify(site) !== JSON.stringify(S.site)) foreign = true;
+  return { items: out, site, img: imgCfgOf(remote) || S.img, foreign };
+}
+function dataChange(){
+  return { path: 'data.json', build: async head => {
+    const m = mergeData(await readRemoteData(head));
+    return { b64: dataB64(m.items, m.site, m.img), apply(){
+      S.items = m.items; S.site = m.site; S.img = m.img; setBase();
+      if(m.foreign){
+        paintHead();
+        if(!$('#sheet').classList.contains('on') && !$('#lb').classList.contains('on')) applyFilter();
+        toast('다른 기기에서 바뀐 내용도 함께 반영했어요', 2500);
+      }
+    }};
+  }};
 }
 let commitQueue = Promise.resolve(), pendingCommits = 0;
 async function commitAll(changes, message, onProg){
   if(S.mode !== 'github') return putMeta();
-  const payload = dataB64();
   pendingCommits++; S.busy = true;
-  const task = commitQueue.then(()=>doCommit(changes, message, onProg, payload));
+  const task = commitQueue.then(()=>doCommit(changes, message, onProg));
   commitQueue = task.catch(()=>{});
   try{return await task;}
   finally{pendingCommits--; S.busy = pendingCommits > 0; lastLoad = Date.now();}
 }
-async function doCommit(changes, message, onProg, payload = dataB64()){
+async function doCommit(changes, message, onProg){
   if(S.img && S.img.repo && S.img.repo !== S.cfg.repo){
     // 이미지 전용 저장소: ① 새 사진 먼저 올리고 ② 목록(data.json) 저장 ③ 지울 사진은 마지막에 정리
     const imgAdd = changes.filter(c => isImgPath(c.path) && !c.del);
     const imgDel = changes.filter(c => isImgPath(c.path) && c.del);
     const rest   = changes.filter(c => !isImgPath(c.path));
     if(imgAdd.length) await ghCommit(imgAdd, message, onProg, imgRepo());
-    await commitTolerant(rest, message, imgAdd.length ? null : onProg, payload);
+    await commitTolerant(rest, message, imgAdd.length ? null : onProg);
     if(imgDel.length){
       // 목록은 이미 저장됐으므로 사진 정리가 실패해도 화면에는 문제가 없다
       try{ await ghCommit(imgDel, message, null, imgRepo()); }
@@ -832,14 +922,14 @@ async function doCommit(changes, message, onProg, payload = dataB64()){
     }
     return;
   }
-  await commitTolerant(changes, message, onProg, payload);
+  await commitTolerant(changes, message, onProg);
 }
-async function commitTolerant(changes, message, onProg, payload){
+async function commitTolerant(changes, message, onProg){
   try{
-    await ghCommit([...changes, { path: 'data.json', b64: payload }], message, onProg);
+    await ghCommit([...changes, dataChange()], message, onProg);
   }catch(e){
     if(e.status === 422 && /does not exist|not found/i.test(e.body || '') && changes.some(c => c.del)){   // 지울 파일이 이미 없을 때
-      await ghCommit([...changes.filter(c => !c.del), { path: 'data.json', b64: payload }], message, onProg);
+      await ghCommit([...changes.filter(c => !c.del), dataChange()], message, onProg);
       return;
     }
     throw e;
@@ -869,6 +959,7 @@ function applyRemote(d){
   S.items = normalize(d.items);
   S.site  = { title: d.title || DEF.title, sub: d.sub ?? DEF.sub, cover: d.cover || '' };
   S.img   = imgCfgOf(d);
+  setBase();
   lastLoad = Date.now();
 }
 function imgCfgOf(d){
@@ -896,7 +987,7 @@ async function refresh(){
     const anchor = [...grid.children].find(el => el.getBoundingClientRect().bottom > 0);
     const anchorId = anchor ? S.view[+anchor.dataset.i]?.id : null;
     const top = anchor?.getBoundingClientRect().top;
-    S.items = nextItems; S.site = nextSite; S.img = imgCfgOf(d);
+    S.items = nextItems; S.site = nextSite; S.img = imgCfgOf(d); setBase();
     paintHead(); applyFilter();
     const index = S.view.findIndex(it=>it.id===anchorId);
     const target = Math.min(S.view.length,Math.max(drawn,index+1));
@@ -938,6 +1029,11 @@ async function ogChange(){
   let out = html;
   out = setMeta(out, 'og:site_name',        S.site.title);
   out = setMeta(out, 'og:title',            S.site.title);
+  // 페이지가 처음 뜰 때 잠깐 보이는 제목/설명도 지금 값으로 맞춘다 (예전 값이 1초쯤 보였다 바뀌는 문제)
+  const escText = t => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  out = out.replace(/<title>[^<]*<\/title>/i, () => '<title>' + escText(S.site.title) + '</title>');
+  out = out.replace(/(<h1 id="siteTitle">)[^<]*(<\/h1>)/, (m, a, b) => a + escText(S.site.title) + b);
+  out = out.replace(/(<p class="sub" id="siteSub")[^>]*>[^<]*(<\/p>)/, (m, a, b) => a + (S.site.sub ? '' : ' style="display:none"') + '>' + escText(S.site.sub) + b);
   out = setMeta(out, 'og:description',      desc);
   out = setMeta(out, 'twitter:title',       S.site.title);
   out = setMeta(out, 'twitter:description', desc);
@@ -1337,29 +1433,12 @@ async function openLB(i){
     }
   });
 
-  els.forEach(el => el.addEventListener('load', placeNav, { once: true }));
   paintLbFav();
 
   $('#lb').classList.add('on');
   $('#lbScroll').scrollTop = 0;
   document.body.style.overflow = 'hidden';
-  placeNav();
 }
-// 좌우 버튼을 화면 가운데가 아니라 보이는 이미지의 세로 가운데에 둔다
-function placeNav(){
-  if(!$('#lb').classList.contains('on')) return;
-  const r = $('#lbImgs').getBoundingClientRect();
-  const topLimit = $('.lb-top').getBoundingClientRect().bottom + 8, bottomLimit = innerHeight - 8;
-  const top = Math.max(r.top, topLimit), bottom = Math.min(r.bottom, bottomLimit);
-  const half = $('#lbPrev').offsetHeight / 2;
-  let y = bottom - top > half * 2 ? (top + bottom) / 2 : innerHeight / 2;
-  y = Math.min(Math.max(y, topLimit + half), bottomLimit - half);
-  $('#lbPrev').style.top = $('#lbNext').style.top = y + 'px';
-}
-let navRaf = 0;
-const queueNav = () => { cancelAnimationFrame(navRaf); navRaf = requestAnimationFrame(placeNav); };
-$('#lbScroll').addEventListener('scroll', queueNav, { passive: true });
-window.addEventListener('resize', queueNav);
 function closeLB(){
   $('#lb').classList.remove('on'); document.body.style.overflow = '';
   if(currentPage !== lbStartPage) grid.querySelector('[data-i="'+S.cur+'"]')?.scrollIntoView({block:'center',behavior:'instant'});
@@ -1823,7 +1902,7 @@ async function addSheet(){
   picked = []; importStop = false;
   sheet(`
     <h3>이미지 일괄 추가 · ${CATS[addCat()]} 탭</h3>
-    <div class="note">1,000장도 한 번에 선택할 수 있어요. 이미 등록된 작가명은 중복으로 제외합니다. 저장 중 중단되면 같은 브라우저에서 ＋를 눌러 이어 올리세요.</div>
+    <div class="note">이미 등록된 작가명은 중복으로 제외합니다. 저장 중 중단되면 같은 브라우저에서 ＋를 눌러 이어 올리세요.</div>
     <div class="drop" id="drop" role="button" tabindex="0"><span class="ic">＋</span>사진 여러 장 선택</div>
     <input type="file" id="file" accept="image/*" multiple hidden>
     <p id="importStatus" role="status" aria-live="polite">사진을 선택하세요</p>
@@ -1872,14 +1951,14 @@ async function addSheet(){
       : '사진을 선택하세요';
     const progress = $('#importProgress'); progress.max = Math.max(1, total); progress.value = done;
     if(S.importing) prog(done / Math.max(1, total));
-    // 처리 중인 파일과 아직 남은 파일 위주로 최대 40개만 표시한다.
-    const visible = importJobs.filter(j => !importFinished(j)).slice(0, 40);
-    $('#importList').innerHTML = visible.map(j => `<div style="padding:7px 0;border-bottom:1px solid var(--line-soft)">
-      <span>${importJobs.indexOf(j) + 1}. [${CATS[j.cat === 'uc' ? 'uc' : 'artist']}] ${esc(j.label)}</span> · <b>${esc(j.state)}</b>
+    // 처리 중인 파일과 아직 남은 파일을 모두 표시한다.
+    const visible = importJobs.filter(j => !importFinished(j));
+    $('#importList').innerHTML = visible.map(j => `<div class="imp-row">
+      <div class="imp-txt"><span>${importJobs.indexOf(j) + 1}. [${CATS[j.cat === 'uc' ? 'uc' : 'artist']}] ${esc(j.label)}</span> · <b>${esc(j.state)}</b>
       ${j.title ? `<div>제목: ${esc(j.title)}</div>` : ''}
-      ${j.error ? `<div style="color:#b44">${esc(j.error)}</div>` : ''}
-      ${!S.importing ? `<button data-remove="${j.id}" aria-label="${esc(j.label)} 제외" style="float:right">✕</button>` : ''}
-      </div>`).join('') + (total - done > 40 ? `<p>외 ${total - done - 40}장</p>` : '');
+      ${j.error ? `<div style="color:#b44">${esc(j.error)}</div>` : ''}</div>
+      ${!S.importing ? `<button class="imp-x" data-remove="${j.id}" aria-label="${esc(j.label)} 제외">✕</button>` : ''}
+      </div>`).join('');
     $('#save').disabled = S.importing || done === total;
     $('#save').textContent = S.importing ? '저장 중…' : total && done === total ? '저장 완료' : importJobs.some(j => j.staged || j.ready || j.saved) ? '이어 올리기' : '일괄 저장';
     $('#cancel').textContent = S.importing ? (importStop ? '현재 묶음 저장 후 중단…' : '저장 후 중단') : '닫기';
@@ -1889,7 +1968,7 @@ async function addSheet(){
     $('#importHint').textContent = S.importing
       ? '이미지를 업로드하고 있습니다. 완료될 때까지 이 화면을 열어 두세요.'
       : done === total && total ? '저장된 이미지는 각각 별도 항목으로 추가됩니다. 작가명 중복 이미지는 제외되었습니다.'
-      : done || errors.length || importJobs.some(j=>j.staged) ? '완료된 항목은 유지됩니다. 같은 브라우저에서 ＋ → 이어 올리기로 남은 작업을 복구할 수 있어요.'
+      : done || errors.length || importJobs.some(j=>j.staged) ? '완료된 항목은 유지됩니다. 같은 브라우저에서 ＋를 누르고 \'이어 올리기\'를 누르면 남은 사진을 이어서 올릴 수 있어요.'
       : '저장하는 동안 이 화면을 열어 두세요. 중단하면 현재 묶음까지 저장합니다.';
   }
   $('#importList').onclick = async e => {
