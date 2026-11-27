@@ -10,17 +10,17 @@
 <meta property="og:type"        content="website">
 <meta property="og:site_name"   content="작태 노트">
 <meta property="og:title"       content="작태 노트">
-<meta property="og:description" content="v5기준 링크 퍼날 X 이름 누르면 복사 폰: 스와이프 / 컴: 방향키로 넘기기 가능">
+<meta property="og:description" content="v5 기준 링크 퍼날 X 이름 누르면 복사">
 <meta property="og:url"         content="https://hiimmani.github.io/artist-tags-note/">
 <meta property="og:image"       content="https://hiimmani.github.io/artist-tags-note/cover.jpg?v=mv52jpaa">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="작태 노트">
-<meta name="twitter:description" content="v5기준 링크 퍼날 X 이름 누르면 복사 폰: 스와이프 / 컴: 방향키로 넘기기 가능">
+<meta name="twitter:description" content="v5 기준 링크 퍼날 X 이름 누르면 복사">
 <meta name="twitter:image"       content="https://hiimmani.github.io/artist-tags-note/cover.jpg?v=mv52jpaa">
 
-<title>작태 노트</title>
+<title>NAI 작태 모음</title>
 <style>
 /* ── 색상 ───────────────────────────── */
 :root{
@@ -467,11 +467,8 @@ button:focus-visible,select:focus-visible{outline:2px solid #a685c7;outline-offs
 
 <div class="wrap">
   <header><div class="notebook-label"><span class="notebook-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="3" width="15" height="18" rx="3"/><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h4"/></svg></span><span>ARTIST NOTES</span></div>
-    <h1 id="siteTitle">작태 노트</h1>
-    <p class="sub" id="siteSub">v5기준
-링크 퍼날 X
-이름 누르면 복사
-폰: 스와이프 / 컴: 방향키로 넘기기 가능</p>
+    <h1 id="siteTitle">NAI 작태 모음</h1>
+    <p class="sub" id="siteSub">V5 기준 계속 추가 됨</p>
     <button id="editHead">사이트 설정</button>
   </header>
 
@@ -767,8 +764,6 @@ async function headInfo(repo){
 async function ghCommit(changes, message, onProg, repo){
   let done = 0;
   // 파일 올리기와 "지금 최신 커밋이 뭔지" 알아보기를 동시에 시작한다 (순서대로 하면 그만큼 늦어진다)
-  const build = changes.find(c => c.build);       // data.json: 저장 직전 최신 목록에 합쳐서 만든다
-  changes = changes.filter(c => !c.build);
   const treeP = mapLimit(changes, PARALLEL, async c => {
     if(c.del) return { path: c.path, mode: '100644', type: 'blob', sha: null };
     if(c.sha) return { path: c.path, mode: '100644', type: 'blob', sha: c.sha };
@@ -783,16 +778,9 @@ async function ghCommit(changes, message, onProg, repo){
   for(let i = 0; i < 4; i++){
     try{
       const { head, base } = await headInfo(repo);
-      let entries = tree, built = null;
-      if(build){
-        built = await build.build(head);
-        const b = await ghReq('POST', 'git/blobs', { content: built.b64, encoding: 'base64' }, repo);
-        entries = [...tree, { path: build.path, mode: '100644', type: 'blob', sha: b.sha }];
-      }
-      const nt = await ghReq('POST', 'git/trees', { base_tree: base, tree: entries }, repo);
+      const nt = await ghReq('POST', 'git/trees', { base_tree: base, tree }, repo);
       const nc = await ghReq('POST', 'git/commits', { message, tree: nt.sha, parents: [head] }, repo);
       await ghReq('PATCH', `git/refs/heads/${S.cfg.branch}`, { sha: nc.sha, force: false }, repo);
-      if(built) built.apply();
       return;
     }catch(e){
       lastErr = e;
@@ -811,91 +799,27 @@ function utf8b64(str){
     bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 }
-function dataB64(items = S.items, site = S.site, img = S.img){
-  return utf8b64(JSON.stringify({ version: 3, title: site.title, sub: site.sub, cover: site.cover || '', ...(img ? { images: img } : {}), updated: new Date().toISOString(), items }, null, 1));
-}
-
-/* ── 저장할 때 다른 기기의 변경을 지우지 않게 합치기 ─────
-   예전에는 "이 기기 화면의 목록 전체"로 data.json 을 덮어써서,
-   오래 열어 둔 창이나 다른 기기에서 저장하면 그 사이 추가된 항목이 사라졌다.
-   이제는 마지막으로 불러온 목록(S.base)과 비교해 이 기기에서 바꾼 것만
-   GitHub 의 최신 목록 위에 다시 적용한다.                                     */
-S.base = null;   // { items: Map(id → JSON), site: JSON }
-function setBase(items = S.items, site = S.site){
-  S.base = { items: new Map(items.map(it => [it.id, JSON.stringify(it)])), site: JSON.stringify(site) };
-}
-async function readRemoteData(ref){
-  const r = await fetch(api('contents/data.json?ref=' + ref),
-    { headers: { ...ghHead(), Accept: 'application/vnd.github.raw' }, cache: 'no-store' });
-  if(r.status === 404) return null;
-  if(!r.ok) throw new Error('최신 목록을 읽지 못했습니다 (GitHub ' + r.status + ')');
-  const d = await r.json();
-  if(!d || !Array.isArray(d.items)) throw new Error('최신 목록 형식이 올바르지 않습니다');
-  return d;
-}
-function mergeData(remote){
-  const local = S.items, base = S.base;
-  if(!remote || !base) return { items: local, site: S.site, img: S.img, foreign: false };
-  const rItems = normalize(remote.items);
-  const localById = new Map(local.map(it => [it.id, it]));
-  const out = [], seen = new Set();
-  let foreign = false;
-  for(const r of rItems){
-    const l = localById.get(r.id), b = base.items.get(r.id);
-    if(!l){
-      if(b !== undefined) continue;                       // 이 기기에서 지운 항목
-      out.push(r); foreign = true;                        // 다른 기기에서 추가한 항목
-    }else if(b !== undefined && JSON.stringify(l) === b){
-      out.push(JSON.stringify(r) === b ? l : r);          // 이 기기에선 그대로 → 최신 쪽 유지
-      if(JSON.stringify(r) !== b) foreign = true;
-    }else out.push(l);                                    // 이 기기에서 고친 항목
-    seen.add(r.id);
-  }
-  // 이 기기에서 새로 추가한 항목 (다른 기기에서 지운 항목은 되살리지 않는다)
-  const used = {};
-  out.forEach(it => { const c = catOf(it); (used[c] ||= new Set()).add(it.no); });
-  for(const l of local){
-    if(seen.has(l.id) || base.items.has(l.id)) continue;
-    const c = catOf(l), u = (used[c] ||= new Set());
-    if(!Number.isSafeInteger(l.no) || l.no < 1 || u.has(l.no)) l.no = Math.max(0, ...u) + 1;   // 번호가 겹치면 뒤로
-    u.add(l.no); out.push(l);
-  }
-  if(rItems.some(r => !localById.has(r.id) && !base.items.has(r.id))) foreign = true;
-  const rSite = { title: remote.title || DEF.title, sub: remote.sub ?? DEF.sub, cover: remote.cover || '' };
-  const site = JSON.stringify(S.site) !== base.site ? S.site : rSite;
-  if(JSON.stringify(site) !== JSON.stringify(S.site)) foreign = true;
-  return { items: out, site, img: imgCfgOf(remote) || S.img, foreign };
-}
-function dataChange(){
-  return { path: 'data.json', build: async head => {
-    const m = mergeData(await readRemoteData(head));
-    return { b64: dataB64(m.items, m.site, m.img), apply(){
-      S.items = m.items; S.site = m.site; S.img = m.img; setBase();
-      if(m.foreign){
-        paintHead();
-        if(!$('#sheet').classList.contains('on') && !$('#lb').classList.contains('on')) applyFilter();
-        toast('다른 기기에서 바뀐 내용도 함께 반영했어요', 2500);
-      }
-    }};
-  }};
+function dataB64(){
+  return utf8b64(JSON.stringify({ version: 3, title: S.site.title, sub: S.site.sub, cover: S.site.cover || '', ...(S.img ? { images: S.img } : {}), updated: new Date().toISOString(), items: S.items }, null, 1));
 }
 let commitQueue = Promise.resolve(), pendingCommits = 0;
 async function commitAll(changes, message, onProg){
   if(S.mode !== 'github') return putMeta();
+  const payload = dataB64();
   pendingCommits++; S.busy = true;
-  const task = commitQueue.then(()=>doCommit(changes, message, onProg));
+  const task = commitQueue.then(()=>doCommit(changes, message, onProg, payload));
   commitQueue = task.catch(()=>{});
   try{return await task;}
   finally{pendingCommits--; S.busy = pendingCommits > 0; lastLoad = Date.now();}
 }
-async function doCommit(changes, message, onProg){
+async function doCommit(changes, message, onProg, payload = dataB64()){
   if(S.img && S.img.repo && S.img.repo !== S.cfg.repo){
     // 이미지 전용 저장소: ① 새 사진 먼저 올리고 ② 목록(data.json) 저장 ③ 지울 사진은 마지막에 정리
     const imgAdd = changes.filter(c => isImgPath(c.path) && !c.del);
     const imgDel = changes.filter(c => isImgPath(c.path) && c.del);
     const rest   = changes.filter(c => !isImgPath(c.path));
     if(imgAdd.length) await ghCommit(imgAdd, message, onProg, imgRepo());
-    await commitTolerant(rest, message, imgAdd.length ? null : onProg);
+    await commitTolerant(rest, message, imgAdd.length ? null : onProg, payload);
     if(imgDel.length){
       // 목록은 이미 저장됐으므로 사진 정리가 실패해도 화면에는 문제가 없다
       try{ await ghCommit(imgDel, message, null, imgRepo()); }
@@ -908,14 +832,14 @@ async function doCommit(changes, message, onProg){
     }
     return;
   }
-  await commitTolerant(changes, message, onProg);
+  await commitTolerant(changes, message, onProg, payload);
 }
-async function commitTolerant(changes, message, onProg){
+async function commitTolerant(changes, message, onProg, payload){
   try{
-    await ghCommit([...changes, dataChange()], message, onProg);
+    await ghCommit([...changes, { path: 'data.json', b64: payload }], message, onProg);
   }catch(e){
     if(e.status === 422 && /does not exist|not found/i.test(e.body || '') && changes.some(c => c.del)){   // 지울 파일이 이미 없을 때
-      await ghCommit([...changes.filter(c => !c.del), dataChange()], message, onProg);
+      await ghCommit([...changes.filter(c => !c.del), { path: 'data.json', b64: payload }], message, onProg);
       return;
     }
     throw e;
@@ -945,7 +869,6 @@ function applyRemote(d){
   S.items = normalize(d.items);
   S.site  = { title: d.title || DEF.title, sub: d.sub ?? DEF.sub, cover: d.cover || '' };
   S.img   = imgCfgOf(d);
-  setBase();
   lastLoad = Date.now();
 }
 function imgCfgOf(d){
@@ -973,7 +896,7 @@ async function refresh(){
     const anchor = [...grid.children].find(el => el.getBoundingClientRect().bottom > 0);
     const anchorId = anchor ? S.view[+anchor.dataset.i]?.id : null;
     const top = anchor?.getBoundingClientRect().top;
-    S.items = nextItems; S.site = nextSite; S.img = imgCfgOf(d); setBase();
+    S.items = nextItems; S.site = nextSite; S.img = imgCfgOf(d);
     paintHead(); applyFilter();
     const index = S.view.findIndex(it=>it.id===anchorId);
     const target = Math.min(S.view.length,Math.max(drawn,index+1));
@@ -1015,11 +938,6 @@ async function ogChange(){
   let out = html;
   out = setMeta(out, 'og:site_name',        S.site.title);
   out = setMeta(out, 'og:title',            S.site.title);
-  // 페이지가 처음 뜰 때 잠깐 보이는 제목/설명도 지금 값으로 맞춘다 (예전 값이 1초쯤 보였다 바뀌는 문제)
-  const escText = t => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  out = out.replace(/<title>[^<]*<\/title>/i, () => '<title>' + escText(S.site.title) + '</title>');
-  out = out.replace(/(<h1 id="siteTitle">)[^<]*(<\/h1>)/, (m, a, b) => a + escText(S.site.title) + b);
-  out = out.replace(/(<p class="sub" id="siteSub")[^>]*>[^<]*(<\/p>)/, (m, a, b) => a + (S.site.sub ? '' : ' style="display:none"') + '>' + escText(S.site.sub) + b);
   out = setMeta(out, 'og:description',      desc);
   out = setMeta(out, 'twitter:title',       S.site.title);
   out = setMeta(out, 'twitter:description', desc);
