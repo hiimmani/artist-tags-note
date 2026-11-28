@@ -7,7 +7,7 @@
   "repo": "artist-tags-note-img",
   "base": "https://hiimmani.github.io/artist-tags-note-img/"
  },
- "updated": "2026-11-27T22:18:12.902Z",
+ "updated": "2026-11-28T12:53:00.853Z",
  "items": [
   {
    "id": "muzgzyd2j07hz",
@@ -11545,6 +11545,134 @@
    ],
    "ts": 1795782118629,
    "no": 704
+  },
+  {
+   "id": "mx0eujz17pqzj",
+   "name": "koirariko",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0eujz17pqzj",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0eujz17pqzj.webp",
+     "src": "images/mx0eujz17pqzj.webp"
+    }
+   ],
+   "ts": 1795870367369,
+   "no": 705
+  },
+  {
+   "id": "mx0eujzfwfw6v",
+   "name": "hamafugu",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0eujzfwfw6v",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0eujzfwfw6v.webp",
+     "src": "images/mx0eujzfwfw6v.webp"
+    }
+   ],
+   "ts": 1795870367370,
+   "no": 706
+  },
+  {
+   "id": "mx0eujzra4c4t",
+   "name": "mochizuki kei",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0eujzra4c4t",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0eujzra4c4t.webp",
+     "src": "images/mx0eujzra4c4t.webp"
+    }
+   ],
+   "ts": 1795870367371,
+   "no": 707
+  },
+  {
+   "id": "mx0euk0aus0cn",
+   "name": "takaya riku",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0euk0aus0cn",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0euk0aus0cn.webp",
+     "src": "images/mx0euk0aus0cn.webp"
+    }
+   ],
+   "ts": 1795870367372,
+   "no": 708
+  },
+  {
+   "id": "mx0euk0nduco5",
+   "name": "neki (wakiko)",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0euk0nduco5",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0euk0nduco5.webp",
+     "src": "images/mx0euk0nduco5.webp"
+    }
+   ],
+   "ts": 1795870367373,
+   "no": 709
+  },
+  {
+   "id": "mx0euk1ba2mjz",
+   "name": "lokulo no mawashimono",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0euk1ba2mjz",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0euk1ba2mjz.webp",
+     "src": "images/mx0euk1ba2mjz.webp"
+    }
+   ],
+   "ts": 1795870367374,
+   "no": 710
+  },
+  {
+   "id": "mx0euk1wdatfc",
+   "name": "aspara",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0euk1wdatfc",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0euk1wdatfc.webp",
+     "src": "images/mx0euk1wdatfc.webp"
+    }
+   ],
+   "ts": 1795870367375,
+   "no": 711
+  },
+  {
+   "id": "mx0euk2irl9gk",
+   "name": "suuroku",
+   "tags": [],
+   "imgs": [
+    {
+     "k": "mx0euk2irl9gk",
+     "w": 832,
+     "h": 1216,
+     "thumb": "thumbs/mx0euk2irl9gk.webp",
+     "src": "images/mx0euk2irl9gk.webp"
+    }
+   ],
+   "ts": 1795870367376,
+   "no": 712
   }
  ]
 }
